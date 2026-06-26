@@ -1,0 +1,193 @@
+[
+  {
+    "project": "zeebu",
+    "symbol": "ZBU",
+    "pool": "4ca69348-5268-4076-ba04-e996032d4efe",
+    "tvlUsd": 822657,
+    "apy": 7066.26985,
+    "apyBase": null,
+    "apyReward": 7066.26985,
+    "apyPct1D": 929.32605,
+    "apyPct7D": null,
+    "stablecoin": false,
+    "ilRisk": "no",
+    "exposure": "single",
+    "risk_flags": [
+      "non-stable exposure",
+      "reward-driven APY",
+      "large 1D APY move"
+    ]
+  },
+  {
+    "project": "aerodrome-slipstream",
+    "symbol": "WETH-CBBTC",
+    "pool": "541b4974-e23b-4a7a-968f-6cfc027825de",
+    "tvlUsd": 204738,
+    "apy": 5283.10207,
+    "apyBase": null,
+    "apyReward": 5283.10207,
+    "apyPct1D": 2327.51744,
+    "apyPct7D": 3154.60087,
+    "stablecoin": false,
+    "ilRisk": "yes",
+    "exposure": "multi",
+    "risk_flags": [
+      "IL risk",
+      "non-stable exposure",
+      "reward-driven APY",
+      "large 1D APY move"
+    ]
+  },
+  {
+    "project": "aerodrome-slipstream",
+    "symbol": "FUN-USDC",
+    "pool": "18674a4f-57ea-4c91-99ce-ea1a2b37aa3d",
+    "tvlUsd": 400937,
+    "apy": 3889.29492,
+    "apyBase": null,
+    "apyReward": 3889.29492,
+    "apyPct1D": -889.76479,
+    "apyPct7D": 2224.37081,
+    "stablecoin": false,
+    "ilRisk": "yes",
+    "exposure": "multi",
+    "risk_flags": [
+      "IL risk",
+      "non-stable exposure",
+      "reward-driven APY",
+      "large 1D APY move"
+    ]
+  },
+  {
+    "project": "uniswap-v4",
+    "symbol": "WETH-SYNP",
+    "pool": "9735f6fb-dcf8-4ab8-bce4-8c069332a9fa",
+    "tvlUsd": 111709,
+    "apy": 3677.90122,
+    "apyBase": 3677.90122,
+    "apyReward": null,
+    "apyPct1D": null,
+    "apyPct7D": null,
+    "stablecoin": false,
+    "ilRisk": "yes",
+    "exposure": "multi",
+    "risk_flags": [
+      "IL risk",
+      "non-stable exposure"
+    ]
+  },
+  {
+    "project": "aerodrome-slipstream",
+    "symbol": "SOL-USDC",
+    "pool": "a6a1fe38-a220-4f68-a2b9-d2749c3e4664",
+    "tvlUsd": 250650,
+    "apy": 3442.21973,
+    "apyBase": null,
+    "apyReward": 3442.21973,
+    "apyPct1D": 1762.30503,
+    "apyPct7D": 1030.37993,
+    "stablecoin": false,
+    "ilRisk": "yes",
+    "exposure": "multi",
+    "risk_flags": [
+      "IL risk",
+      "non-stable exposure",
+      "reward-driven APY",
+      "large 1D APY move"
+    ]
+  },
+  {
+    "project": "aerodrome-slipstream",
+    "symbol": "AVNT-USDC",
+    "pool": "eb27d0be-9de4-4ed9-8d36-a754e18d3358",
+    "tvlUsd": 596363,
+    "apy": 3380.97478,
+    "apyBase": 1.77082,
+    "apyReward": 3379.20396,
+    "apyPct1D": -283.12481,
+    "apyPct7D": -224.08525,
+    "stablecoin": false,
+    "ilRisk": "yes",
+    "exposure": "multi",
+    "risk_flags": [
+      "IL risk",
+      "non-stable exposure",
+      "reward-driven APY",
+      "large 1D APY move"
+    ]
+  },
+  {
+    "project": "aerodrome-slipstream",
+    "symbol": "SOL-CBBTC",
+    "pool": "1b0810d3-1ee3-4a8c-be39-b8a8978fbbc9",
+    "tvlUsd": 237542,
+    "apy": 3261.2453,
+    "apyBase": null,
+    "apyReward": 3261.2453,
+    "apyPct1D": 2922.34623,
+    "apyPct7D": 1850.08215,
+    "stablecoin": false,
+    "ilRisk": "yes",
+    "exposure": "multi",
+    "risk_flags": [
+      "IL risk",
+      "non-stable exposure",
+      "reward-driven APY",
+      "large 1D APY move"
+    ]
+  },
+  {
+    "project": "uniswap-v4",
+    "symbol": "USDC-SPACEX",
+    "pool": "8b460ece-564f-4c97-ab0d-19d570ca5cc4",
+    "tvlUsd": 107604,
+    "apy": 2280.15457,
+    "apyBase": 2280.15457,
+    "apyReward": null,
+    "apyPct1D": null,
+    "apyPct7D": null,
+    "stablecoin": false,
+    "ilRisk": "yes",
+    "exposure": "multi",
+    "risk_flags": [
+      "IL risk",
+      "non-stable exposure"
+    ]
+  },
+  {
+    "project": "uniswap-v4",
+    "symbol": "SPACEX-USDC",
+    "pool": "43cfc615-5cf5-48f4-b1ef-2711a06a4b32",
+    "tvlUsd": 116509,
+    "apy": 2095.01939,
+    "apyBase": 2095.01939,
+    "apyReward": null,
+    "apyPct1D": null,
+    "apyPct7D": null,
+    "stablecoin": false,
+    "ilRisk": "yes",
+    "exposure": "multi",
+    "risk_flags": [
+      "IL risk",
+      "non-stable exposure"
+    ]
+  },
+  {
+    "project": "uniswap-v4",
+    "symbol": "TRUMP-USDC",
+    "pool": "db8914a2-4b6e-47d4-8544-8c4d8c39d0db",
+    "tvlUsd": 107213,
+    "apy": 1913.62877,
+    "apyBase": 1913.62877,
+    "apyReward": null,
+    "apyPct1D": null,
+    "apyPct7D": null,
+    "stablecoin": false,
+    "ilRisk": "yes",
+    "exposure": "multi",
+    "risk_flags": [
+      "IL risk",
+      "non-stable exposure"
+    ]
+  }
+]
