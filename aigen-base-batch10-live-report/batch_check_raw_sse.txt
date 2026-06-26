@@ -1,5 +1,0 @@
-: ping - 2026-06-26 08:02:39.378572+00:00
-
-event: message
-data: {"jsonrpc":"2.0","id":11,"result":{"content":[{"type":"text","text":"Batch scan: 10 tokens on base\n\n  Wrapped Ether (WETH): 100/100 [SYSTEM TOKEN]\n  Aerodrome (AERO): 100/100 [LIKELY SAFE]\n  Unknown (???): 100/100 [SYSTEM TOKEN]\n  Unknown (???): 50/100 [HIGH RISK]\n  Unknown (???): 50/100 [HIGH RISK]\n  Unknown (???): 50/100 [HIGH RISK]\n  Brett (BRETT): 100/100 [LIKELY SAFE]\n  Toshi (???): 100/100 [LIKELY SAFE]\n  Unknown (???): 50/100 [HIGH RISK]\n  Unknown (???): 50/100 [HIGH RISK]\n"}],"structuredContent":{"result":"Batch scan: 10 tokens on base\n\n  Wrapped Ether (WETH): 100/100 [SYSTEM TOKEN]\n  Aerodrome (AERO): 100/100 [LIKELY SAFE]\n  Unknown (???): 100/100 [SYSTEM TOKEN]\n  Unknown (???): 50/100 [HIGH RISK]\n  Unknown (???): 50/100 [HIGH RISK]\n  Unknown (???): 50/100 [HIGH RISK]\n  Brett (BRETT): 100/100 [LIKELY SAFE]\n  Toshi (???): 100/100 [LIKELY SAFE]\n  Unknown (???): 50/100 [HIGH RISK]\n  Unknown (???): 50/100 [HIGH RISK]\n"},"isError":false}}
-
