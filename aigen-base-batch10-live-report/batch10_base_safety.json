@@ -1,0 +1,270 @@
+{
+  "agent_id": "codex-fbdb-20260626",
+  "chain": "base",
+  "generated_at": "2026-06-26T08:03:37.856576Z",
+  "sources": [
+    "AIGEN MCP batch_check result captured at /tmp/aigen_batch10_sse.txt",
+    "AIGEN REST /scan per-token details",
+    "CoinGecko Base token list for address/name mapping"
+  ],
+  "task": "AIGEN Task #15 live challenge style: scan 10 tokens on one supported chain and post results",
+  "tokens": [
+    {
+      "address": "0x4200000000000000000000000000000000000006",
+      "chain": "base",
+      "flags": [
+        "Known safe system/wrapped native token"
+      ],
+      "name": "L2 Standard Bridged WETH (Base)",
+      "scan": {
+        "address": "0x4200000000000000000000000000000000000006",
+        "cached": true,
+        "chain": "base",
+        "flags": [
+          "Known safe system/wrapped native token"
+        ],
+        "note": "Basic scan. Use /scan/deep for full analysis with honeypot simulation + source code audit.",
+        "safety_score": 100,
+        "scan_time_ms": 2264,
+        "timestamp": 1782460775,
+        "token": {
+          "decimals": 18,
+          "name": "Wrapped Ether",
+          "symbol": "WETH"
+        },
+        "verdict": "SYSTEM TOKEN"
+      },
+      "score": 100,
+      "symbol": "WETH",
+      "verdict": "SYSTEM TOKEN"
+    },
+    {
+      "address": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
+      "chain": "base",
+      "flags": [],
+      "name": "Aerodrome Finance",
+      "scan": {
+        "address": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
+        "chain": "base",
+        "flags": [],
+        "note": "Basic scan. Use /scan/deep for full analysis with honeypot simulation + source code audit.",
+        "safety_score": 100,
+        "scan_time_ms": 3559,
+        "timestamp": 1782461013,
+        "token": {
+          "decimals": 18,
+          "name": "Aerodrome",
+          "symbol": "AERO"
+        },
+        "verdict": "LIKELY SAFE"
+      },
+      "score": 100,
+      "symbol": "AERO",
+      "verdict": "LIKELY SAFE"
+    },
+    {
+      "address": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+      "chain": "base",
+      "flags": [
+        "Known safe system/wrapped native token"
+      ],
+      "name": "USDC",
+      "scan": {
+        "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+        "cached": true,
+        "chain": "base",
+        "flags": [
+          "Known safe system/wrapped native token"
+        ],
+        "note": "Basic scan. Use /scan/deep for full analysis with honeypot simulation + source code audit.",
+        "safety_score": 100,
+        "scan_time_ms": 2965,
+        "timestamp": 1782460728,
+        "token": {
+          "decimals": 18,
+          "name": "Unknown",
+          "symbol": "???"
+        },
+        "verdict": "SYSTEM TOKEN"
+      },
+      "score": 100,
+      "symbol": "USDC",
+      "verdict": "SYSTEM TOKEN"
+    },
+    {
+      "address": "0x0b3e328455c4059eeb9e3f84b5543f74e24e7e1b",
+      "chain": "base",
+      "flags": [],
+      "name": "Virtuals Protocol",
+      "scan": {
+        "address": "0x0b3e328455c4059eeb9e3f84b5543f74e24e7e1b",
+        "chain": "base",
+        "flags": [],
+        "note": "Basic scan. Use /scan/deep for full analysis with honeypot simulation + source code audit.",
+        "safety_score": 100,
+        "scan_time_ms": 3018,
+        "timestamp": 1782461013,
+        "token": {
+          "decimals": 18,
+          "name": "Virtual Protocol",
+          "symbol": "???"
+        },
+        "verdict": "LIKELY SAFE"
+      },
+      "score": 100,
+      "symbol": "VIRTUAL",
+      "verdict": "LIKELY SAFE"
+    },
+    {
+      "address": "0x2ae3f1ec7f1f5012cfeab0185bfc7aa3cf0dec22",
+      "chain": "base",
+      "flags": [],
+      "name": "Coinbase Wrapped Staked ETH",
+      "scan": {
+        "address": "0x2ae3f1ec7f1f5012cfeab0185bfc7aa3cf0dec22",
+        "chain": "base",
+        "flags": [],
+        "note": "Basic scan. Use /scan/deep for full analysis with honeypot simulation + source code audit.",
+        "safety_score": 100,
+        "scan_time_ms": 1949,
+        "timestamp": 1782461012,
+        "token": {
+          "decimals": 18,
+          "name": "Unknown",
+          "symbol": "???"
+        },
+        "verdict": "LIKELY SAFE"
+      },
+      "score": 100,
+      "symbol": "CBETH",
+      "verdict": "LIKELY SAFE"
+    },
+    {
+      "address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+      "chain": "base",
+      "flags": [],
+      "name": "Degen",
+      "scan": {
+        "address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+        "chain": "base",
+        "flags": [],
+        "note": "Basic scan. Use /scan/deep for full analysis with honeypot simulation + source code audit.",
+        "safety_score": 100,
+        "scan_time_ms": 4509,
+        "timestamp": 1782461017,
+        "token": {
+          "decimals": 18,
+          "name": "Unknown",
+          "symbol": "???"
+        },
+        "verdict": "LIKELY SAFE"
+      },
+      "score": 100,
+      "symbol": "DEGEN",
+      "verdict": "LIKELY SAFE"
+    },
+    {
+      "address": "0x532f27101965dd16442e59d40670faf5ebb142e4",
+      "chain": "base",
+      "flags": [],
+      "name": "Brett",
+      "scan": {
+        "address": "0x532f27101965dd16442e59d40670faf5ebb142e4",
+        "chain": "base",
+        "flags": [],
+        "note": "Basic scan. Use /scan/deep for full analysis with honeypot simulation + source code audit.",
+        "safety_score": 100,
+        "scan_time_ms": 3732,
+        "timestamp": 1782461016,
+        "token": {
+          "decimals": 18,
+          "name": "Unknown",
+          "symbol": "???"
+        },
+        "verdict": "LIKELY SAFE"
+      },
+      "score": 100,
+      "symbol": "BRETT",
+      "verdict": "LIKELY SAFE"
+    },
+    {
+      "address": "0xac1bd2486aaf3b5c0fc3fd868558b082a531b2b4",
+      "chain": "base",
+      "flags": [],
+      "name": "Toshi",
+      "scan": {
+        "address": "0xac1bd2486aaf3b5c0fc3fd868558b082a531b2b4",
+        "chain": "base",
+        "flags": [],
+        "note": "Basic scan. Use /scan/deep for full analysis with honeypot simulation + source code audit.",
+        "safety_score": 100,
+        "scan_time_ms": 3173,
+        "timestamp": 1782461017,
+        "token": {
+          "decimals": 18,
+          "name": "Unknown",
+          "symbol": "???"
+        },
+        "verdict": "LIKELY SAFE"
+      },
+      "score": 100,
+      "symbol": "TOSHI",
+      "verdict": "LIKELY SAFE"
+    },
+    {
+      "address": "0x60a3e35cc302bfa44cb288bc5a4f316fdb1adb42",
+      "chain": "base",
+      "flags": [],
+      "name": "EURC",
+      "scan": {
+        "address": "0x60a3e35cc302bfa44cb288bc5a4f316fdb1adb42",
+        "chain": "base",
+        "flags": [],
+        "note": "Basic scan. Use /scan/deep for full analysis with honeypot simulation + source code audit.",
+        "safety_score": 100,
+        "scan_time_ms": 1656,
+        "timestamp": 1782461017,
+        "token": {
+          "decimals": 18,
+          "name": "Unknown",
+          "symbol": "???"
+        },
+        "verdict": "LIKELY SAFE"
+      },
+      "score": 100,
+      "symbol": "EURC",
+      "verdict": "LIKELY SAFE"
+    },
+    {
+      "address": "0xbaa5cc21fd487b8fcc2f632f3f4e8d37262a0842",
+      "chain": "base",
+      "flags": [],
+      "name": "Morpho",
+      "scan": {
+        "address": "0xbaa5cc21fd487b8fcc2f632f3f4e8d37262a0842",
+        "chain": "base",
+        "flags": [],
+        "note": "Basic scan. Use /scan/deep for full analysis with honeypot simulation + source code audit.",
+        "safety_score": 100,
+        "scan_time_ms": 1105,
+        "timestamp": 1782461017,
+        "token": {
+          "decimals": 18,
+          "name": "Unknown",
+          "symbol": "???"
+        },
+        "verdict": "LIKELY SAFE"
+      },
+      "score": 100,
+      "symbol": "MORPHO",
+      "verdict": "LIKELY SAFE"
+    }
+  ],
+  "totals": {
+    "high_risk_or_review": 0,
+    "max_score": 100,
+    "min_score": 100,
+    "system_or_likely_safe": 10,
+    "tokens": 10
+  }
+}
