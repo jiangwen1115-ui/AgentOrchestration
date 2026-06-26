@@ -1,0 +1,245 @@
+diff --git a/missions.py b/missions.py
+index b830eed..594e835 100644
+--- a/missions.py
++++ b/missions.py
+@@ -424,28 +424,7 @@ def create_mission(creator_agent_id: str, title: str, description: str,
+         if len(rx) > 500:
+             return {"error": "regex too long (max 500 chars)"}
+ 
+-    now = int(time.time())
+-    mid = "mis_" + uuid.uuid4().hex[:12]
+-
+-    # AIGEN: debit upfront, mission immediately 'open'
+-    # USDC/ETH: mission starts 'awaiting_funding', creator confirms separately
+-    if reward_currency == "AIGEN":
+-        total_cost = reward_amount + SPAM_FEE_BURN_AIGEN
+-        if _balance(creator_agent_id) < total_cost:
+-            return {"error": f"insufficient AIGEN: need {total_cost} (reward {reward_amount} + spam_fee {SPAM_FEE_BURN_AIGEN}), have {_balance(creator_agent_id)}"}
+-        if not _debit(creator_agent_id, reward_amount, "mission-escrow"):
+-            return {"error": "escrow debit failed"}
+-        if not _debit(creator_agent_id, SPAM_FEE_BURN_AIGEN, "mission-spam-fee"):
+-            _credit(creator_agent_id, reward_amount, "mission-escrow-rollback")
+-            return {"error": "spam-fee debit failed"}
+-        _credit("treasury", SPAM_FEE_BURN_AIGEN, "spam-fee-burn-mission")
+-        initial_status = "open"
+-        spam_fee = SPAM_FEE_BURN_AIGEN
+-    else:
+-        initial_status = "awaiting_funding"
+-        spam_fee = 0
+-
+-    # Validate webhook URL (optional)
++    # Validate optional fields before any balance mutation.
+     webhook_clean = ""
+     if webhook_url:
+         wu = webhook_url.strip()
+@@ -455,7 +434,6 @@ def create_mission(creator_agent_id: str, title: str, description: str,
+             return {"error": "webhook_url too long (max 500)"}
+         webhook_clean = wu
+ 
+-    # Validate email (optional)
+     email_clean = ""
+     if notify_email:
+         em = notify_email.strip().lower()
+@@ -465,7 +443,6 @@ def create_mission(creator_agent_id: str, title: str, description: str,
+             return {"error": "notify_email too long"}
+         email_clean = em
+ 
+-    # Validate category (optional, defaults to 'other')
+     cat_clean = (category or "other").strip().lower()
+     if cat_clean not in VALID_CATEGORIES:
+         return {"error": f"category must be one of {sorted(VALID_CATEGORIES)}"}
+@@ -478,6 +455,27 @@ def create_mission(creator_agent_id: str, title: str, description: str,
+     if not isinstance(tp_clean, dict):
+         return {"error": "type_params must be an object"}
+ 
++    now = int(time.time())
++    mid = "mis_" + uuid.uuid4().hex[:12]
++
++    # AIGEN: debit upfront, mission immediately 'open'
++    # USDC/ETH: mission starts 'awaiting_funding', creator confirms separately
++    if reward_currency == "AIGEN":
++        total_cost = reward_amount + SPAM_FEE_BURN_AIGEN
++        if _balance(creator_agent_id) < total_cost:
++            return {"error": f"insufficient AIGEN: need {total_cost} (reward {reward_amount} + spam_fee {SPAM_FEE_BURN_AIGEN}), have {_balance(creator_agent_id)}"}
++        if not _debit(creator_agent_id, reward_amount, "mission-escrow"):
++            return {"error": "escrow debit failed"}
++        if not _debit(creator_agent_id, SPAM_FEE_BURN_AIGEN, "mission-spam-fee"):
++            _credit(creator_agent_id, reward_amount, "mission-escrow-rollback")
++            return {"error": "spam-fee debit failed"}
++        _credit("treasury", SPAM_FEE_BURN_AIGEN, "spam-fee-burn-mission")
++        initial_status = "open"
++        spam_fee = SPAM_FEE_BURN_AIGEN
++    else:
++        initial_status = "awaiting_funding"
++        spam_fee = 0
++
+     m = {
+         "id": mid,
+         "creator": creator_agent_id,
+@@ -517,19 +515,7 @@ def create_mission(creator_agent_id: str, title: str, description: str,
+     if verification_type == "creator_judges":
+         m["judge_deadline"] = m["deadline"] + CREATOR_JUDGE_GRACE_DAYS * 86400
+ 
+-    d = load()
+-    d["missions"].append(m)
+-    d["total"] += 1
+-    if reward_currency == "AIGEN":
+-        d["lifetime_reward_aigen_escrowed"] = d.get("lifetime_reward_aigen_escrowed", 0) + reward_amount
+-        d["lifetime_spam_fees_burned"] = d.get("lifetime_spam_fees_burned", 0) + SPAM_FEE_BURN_AIGEN
+-    save(d)
+-
+-    # Notify subscribers (only if mission is open, not awaiting_funding)
+-    if initial_status == "open":
+-        _notify_subscribers_on_create(m)
+-
+-    # Compute and expose protocol fee split — transparent to creator/winner at creation time
++    # Compute and persist protocol fee split before saving the mission.
+     net_to_winner, fee = _split_with_fee(reward_amount)
+     m["fee_quote"] = {
+         "gross_amount": int(reward_amount),
+@@ -539,9 +525,8 @@ def create_mission(creator_agent_id: str, title: str, description: str,
+         "fee_pct": f"{PROTOCOL_FEE_BPS/100:.2f}%",
+     }
+ 
+-    # For USDC/ETH/SOL/SPL: include funding instructions
++    # For USDC/ETH/SOL/SPL: include funding instructions in stored state too.
+     if reward_currency != "AIGEN":
+-        # Pick the right token mint/contract for the chain
+         if reward_chain == "solana":
+             send_to = TREASURY_SOL
+             token_contract = SPL_TOKEN_MINTS.get(reward_currency)  # None for native SOL
+@@ -555,10 +540,23 @@ def create_mission(creator_agent_id: str, title: str, description: str,
+             "currency": reward_currency,
+             "chain": reward_chain,
+             "amount_wei": int(reward_amount),
++            "amount_base_units": int(reward_amount),
+             "token_contract": token_contract,
+             "next_step": f"After sending, POST /missions/{mid}/confirm-funding with the tx_hash",
+             "fee_note": f"Winner receives net {net_to_winner} ({reward_currency}). Protocol keeps {fee} ({PROTOCOL_FEE_BPS/100:.2f}% fee) from your deposit.",
+         }
++
++    d = load()
++    d["missions"].append(m)
++    d["total"] += 1
++    if reward_currency == "AIGEN":
++        d["lifetime_reward_aigen_escrowed"] = d.get("lifetime_reward_aigen_escrowed", 0) + reward_amount
++        d["lifetime_spam_fees_burned"] = d.get("lifetime_spam_fees_burned", 0) + SPAM_FEE_BURN_AIGEN
++    save(d)
++
++    # Notify subscribers (only if mission is open, not awaiting_funding)
++    if initial_status == "open":
++        _notify_subscribers_on_create(m)
+     return m
+ 
+ 
+@@ -631,6 +629,60 @@ def confirm_funding(mission_id: str, tx_hash: str) -> dict:
+             return {"ok": True, "mission_id": mission_id, "status": "open",
+                     "deposit_tx": tx_hash, "amount_funded": r["amount"], "currency": "SOL"}
+ 
++        # SPL token on Solana — verify treasury-owned token balance increased.
++        if r.get("chain") == "solana":
++            if r["currency"] not in SPL_TOKEN_MINTS:
++                return {"error": f"unsupported Solana currency {r['currency']}"}
++            if not is_sol_tx:
++                return {"error": f"tx_hash must be Solana base58 signature for {r['currency']} mission"}
++            try:
++                import urllib.request as _ur
++                rpc_body = json.dumps({
++                    "jsonrpc": "2.0", "id": 1, "method": "getTransaction",
++                    "params": [tx_hash, {"encoding": "jsonParsed", "maxSupportedTransactionVersion": 0}],
++                }).encode()
++                req = _ur.Request(SOLANA_RPC, method="POST", data=rpc_body,
++                                  headers={"Content-Type": "application/json"})
++                with _ur.urlopen(req, timeout=15) as resp:
++                    j = json.loads(resp.read())
++                tx = (j.get("result") or {})
++                if not tx:
++                    return {"error": "Solana tx not found yet (try again in a few seconds)"}
++                meta = tx.get("meta") or {}
++                if meta.get("err") is not None:
++                    return {"error": f"Solana tx reverted: {meta['err']}"}
++
++                mint = SPL_TOKEN_MINTS[r["currency"]]
++                pre_by_account = {}
++                for bal in meta.get("preTokenBalances", []):
++                    if bal.get("mint") != mint:
++                        continue
++                    key = (bal.get("accountIndex"), bal.get("mint"))
++                    amount_raw = (bal.get("uiTokenAmount") or {}).get("amount", "0")
++                    pre_by_account[key] = int(amount_raw)
++
++                received = 0
++                for bal in meta.get("postTokenBalances", []):
++                    if bal.get("mint") != mint or bal.get("owner") != TREASURY_SOL:
++                        continue
++                    key = (bal.get("accountIndex"), bal.get("mint"))
++                    post_raw = int((bal.get("uiTokenAmount") or {}).get("amount", "0"))
++                    delta = post_raw - pre_by_account.get(key, 0)
++                    if delta > 0:
++                        received += delta
++                if received < int(r["amount"]):
++                    return {"error": f"{r['currency']} received {received} < required {r['amount']} base units"}
++            except Exception as e:
++                return {"error": f"Solana SPL lookup failed: {e}"}
++
++            r["deposit_tx"] = tx_hash
++            r["deposit_confirmed_at"] = int(time.time())
++            m["status"] = "open"
++            save(d)
++            _notify_subscribers_on_create(m)
++            return {"ok": True, "mission_id": mission_id, "status": "open",
++                    "deposit_tx": tx_hash, "amount_funded": r["amount"], "currency": r["currency"]}
++
+         # Verify on-chain
+         try:
+             from web3 import Web3
+@@ -1293,6 +1345,8 @@ def resolve(mission_id: str) -> dict:
+     for m in d["missions"]:
+         if m["id"] != mission_id:
+             continue
++        if m["status"] in ("resolved", "voided"):
++            return {"ok": True, "already_resolved": True, "resolution": m.get("resolution")}
+         if m["status"] != "open":
+             return {"error": f"mission is {m['status']}", "resolution": m.get("resolution")}
+ 
+@@ -1407,17 +1461,22 @@ def _resolve_first_valid(d: dict, m: dict, now: int) -> dict:
+     pattern = re.compile(rx) if rx else None
+     subs_sorted = sorted(m["submissions"], key=lambda s: s["submitted_at"])
+     winner = None
++    pending_left = False
++    changed = False
+     for s in subs_sorted:
+         if s.get("status") == "rejected":
+             continue
+         if pattern and pattern.search(s["proof"]):
+             v = _oracle_verify(m, s)  # real-verification gate (GoPlus for safety reviews)
++            s["oracle_check"] = {"passed": v.get("passed"), "reason": v.get("reason"), "checked_at": now}
++            changed = True
++            if v.get("passed") is True:
++                winner = s
++                break
+             if v.get("passed") is False:
+                 s["status"] = "rejected"
+-                s["oracle_check"] = {"passed": False, "reason": v.get("reason"), "checked_at": now}
+                 continue
+-            s["oracle_check"] = {"passed": v.get("passed"), "reason": v.get("reason"), "checked_at": now}
+-            winner = s
++            pending_left = True
+             break
+ 
+     if winner:
+@@ -1441,7 +1500,14 @@ def _resolve_first_valid(d: dict, m: dict, now: int) -> dict:
+         save(d)
+         return {"ok": True, "winner": winner["submitter"], "payout": pay}
+ 
++    if pending_left:
++        if changed:
++            save(d)
++        return {"error": "no verified submission yet", "pending": True}
++
+     if now < m["deadline"]:
++        if changed:
++            save(d)
+         return {"error": "no valid submission yet, and deadline not reached"}
+ 
+     refund = _refund_creator_onchain(m)
